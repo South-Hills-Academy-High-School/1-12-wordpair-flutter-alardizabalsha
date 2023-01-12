@@ -50,18 +50,51 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                   label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                   label: Text('favorites'),
+                   ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {},
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
+    
     IconData icon;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
     }
-
-    return Scaffold(
-      body: Center(
+    return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -88,7 +121,7 @@ class MyHomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      
     );
   }
 }
